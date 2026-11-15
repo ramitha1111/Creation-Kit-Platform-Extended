@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "msbuildCheckBuild.yml"
+# Estimated savings: ~2 min/run
+#
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
@@ -16,6 +21,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
