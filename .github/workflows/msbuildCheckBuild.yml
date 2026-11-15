@@ -16,6 +16,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
@@ -32,6 +36,7 @@ permissions:
 jobs:
   build-master:
     runs-on: windows-2022
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v6
@@ -53,6 +58,7 @@ jobs:
      
   noavx2-build-master:
     runs-on: windows-2022
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v6
